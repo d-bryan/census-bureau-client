@@ -1,7 +1,7 @@
 export const config = {
     urls: {
         testing: 'http://localhost:8000/',
-        live: 'census-bureau-data.herokuapp.com/'
+        live: 'https://census-bureau-data.herokuapp.com/'
     },
     routes: {
         apportionment: {
@@ -10,27 +10,27 @@ export const config = {
                 paramType: null,
             },
             state: {
-                route: 'state/',
+                route: 'apportionment/state/',
                 paramType: 'state',
             },
             year: {
-                route: 'year/',
+                route: 'apportionment/year/',
                 paramType: 'year',
             },
             popGreater: {
-                route: 'pop-greater/',
+                route: 'apportionment/pop-greater/',
                 paramType: 'pop',
             },
             popLess: {
-                route: 'pop-less/',
+                route: 'apportionment/pop-less/',
                 paramType: 'pop',
             },
             repGreater: {
-                route: 'reps-greater/',
+                route: 'apportionment/reps-greater/',
                 paramType: 'reps',
             },
             repLess: {
-                route: 'reps-less/',
+                route: 'apportionment/reps-less/',
                 paramType: 'reps',
             },
         },
@@ -40,19 +40,19 @@ export const config = {
                 paramType: null,
             },
             state: {
-                route: 'state/',
+                route: 'itemized-taxes/state/',
                 paramType: 'state',
             },
             year: {
-                route: 'year/',
+                route: 'itemized-taxes/year/',
                 paramType: 'year',
             },
             taxesGreater: {
-                route: 'taxes-greater/',
+                route: 'itemized-taxes/taxes-greater/',
                 paramType: 'taxes',
             },
             taxesLess: {
-                route: 'taxes-less/',
+                route: 'itemized-taxes/taxes-less/',
                 paramType: 'taxes',
             },
         },
@@ -62,11 +62,11 @@ export const config = {
                 paramType: 'count-id',
             },
             fullFip: {
-                route: 'total-fip/',
+                route: 'unemployment-county/total-fip/',
                 paramType: 'count-id',
             },
             fip: {
-                route: 'fip/',
+                route: 'unemployment-county/fip/',
                 paramType: 'fip',
             },
         }

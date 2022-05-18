@@ -7,6 +7,12 @@
   pointer-events: none;
 }
 
+.state {
+  fill: #61dafb;
+  stroke: black;
+  stroke-width: 1;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .main-logo {
     animation: App-logo-spin infinite 20s linear;

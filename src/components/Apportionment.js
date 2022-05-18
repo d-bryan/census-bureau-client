@@ -1,223 +1,174 @@
 import React from "react";
 import {
-  Box, Grid, MenuItem, TextField,
-  Typography, Slider,
-  FormControlLabel, Switch,
-  Button,
+  Box, Grid, Typography
 } from "@mui/material";
+import * as JSC from "jscharting";
+// import {JSCharting} from "jscharting-react";
 
-export default function Apportionment(props) {
-  const { context } = props;
-  const [dataChoice, setDataChoice] = React.useState({
-    choice: 'totalApportionment',
-    selectedState: {
-      value: '',
-      isHidden: true,
+const Map = ({currentData}) => {
+// JS
+  const chartConfig = {
+    debug: true,
+    title_label_text:
+      '2012 Presidential Election Results',
+    type: 'map',
+    axisToZoom: '',
+    toolbar_visible: false,
+    legend: {
+      position: 'inside top right',
+      margin: { top: -10, right: 100 },
+      layout: 'horizontal',
+      defaultEntry_style_fontSize: '14px'
     },
-    selectedYear: {
-      value: '',
-      isHidden: true,
-      min: 1930,
-      max: 2020,
+    defaultPoint: {
+      outline_color: 'white',
+      label: {
+        text: '%stateCode',
+        style_color: '#3a3a3a'
+      },
+      tooltip:
+        '%name<br/><b>Obama:</b> %obama%<br/><b>Romney:</b> %romney%<br/><b>Winner:</b> %seriesName'
     },
-    selectedPopulation: {
-      value: '',
-      isHidden: true,
-      min: 0,
-      max: 39576757,
-    },
-    selectedRepresentatives: {
-      value: '',
-      isHidden: true,
-      min: 0,
-      max: 53,
-    },
-  });
-  const [apportionment, setApportionment] = React.useState({
-    full: [],
-    state: [],
-    year: [],
-    popGreater: [],
-    popLess: [],
-    repGreater: [],
-    repLess: [],
-  });
-  const [sliderProps, setSliderProps] = React.useState({
-    marks: [],
-    currentValue: 1,
-    defaultValue: 1,
-    min: 1,
-    max: 53,
-    step: 1,
-  });
+    series: [
+      {
+        name: 'Romney',
+        color: '#bb4e55',
+        points: []
+      },
+      {
+        name: 'Obama',
+        color: '#40698b',
+        points: []
+      },
+      {
+        name: 'Representatives',
+        color: '#40698b',
+        points: []
+      }
+    ]
+  };
+  console.log(currentData);
+//State, Obama, Romney %
+  var results = [
+    ['Alabama', 38.36, 60.55],
+    ['Alaska', 40.81, 54.8],
+    ['Arizona', 44.45, 53.48],
+    ['Arkansas', 36.88, 60.57],
+    ['California', 60.16, 37.07],
+    ['Colorado', 51.45, 46.09],
+    ['Connecticut', 58.06, 40.72],
+    ['Delaware', 58.61, 39.98],
+    ['D. C.', 90.91, 7.28],
+    ['Florida', 49.9, 49.03],
+    ['Georgia', 45.39, 53.19],
+    ['Hawaii', 70.55, 27.84],
+    ['Idaho', 32.4, 64.09],
+    ['Illinois', 57.5, 40.66],
+    ['Indiana', 43.84, 54.04],
+    ['Iowa', 51.99, 46.18],
+    ['Kansas', 38.0, 59.59],
+    ['Kentucky', 37.78, 60.47],
+    ['Louisiana', 40.58, 57.78],
+    ['Maine', 56.27, 40.98],
+    ['Maryland', 61.97, 35.9],
+    ['Massachusetts', 60.67, 37.52],
+    ['Michigan', 54.04, 44.58],
+    ['Minnesota', 52.65, 44.96],
+    ['Mississippi', 43.79, 55.29],
+    ['Missouri', 44.28, 53.64],
+    ['Montana', 41.66, 55.3],
+    ['Nebraska', 38.03, 59.8],
+    ['Nevada', 52.36, 45.68],
+    ['New Hampshire', 51.98, 46.4],
+    ['New Jersey', 58.25, 40.5],
+    ['New Mexico', 52.99, 42.84],
+    ['New York', 63.35, 35.17],
+    ['North Carolina', 48.35, 50.39],
+    ['North Dakota', 38.69, 58.32],
+    ['Ohio', 50.58, 47.6],
+    ['Oklahoma', 33.23, 66.77],
+    ['Oregon', 54.24, 42.15],
+    ['Pennsylvania', 51.95, 46.57],
+    ['Rhode Island', 62.7, 35.24],
+    ['South Carolina', 44.09, 54.56],
+    ['South Dakota', 39.87, 57.89],
+    ['Tennessee', 39.04, 59.42],
+    ['Texas', 41.35, 57.13],
+    ['Utah', 24.67, 72.55],
+    ['Vermont', 66.57, 30.97],
+    ['Virginia', 51.16, 47.28],
+    ['Washington', 55.8, 41.03],
+    ['West Virginia', 35.45, 62.14],
+    ['Wisconsin', 52.83, 45.89],
+    ['Wyoming', 27.82, 68.64]
+  ];
+  var romneySeries = chartConfig.series[0];
+  var obamaSeries = chartConfig.series[1];
 
-  const handleSetSliderMarks = (currentChoice) => {
-    const marks = [];
-    switch (currentChoice) {
-      case 'totalApportionment':
-        setSliderProps({
-          ...sliderProps,
-          marks: [],
-          currentValue: 1,
-          defaultValue: 1,
-          min: 1,
-          max: 53,
-          step: 1,
+  for (
+    var i = 0; i < results.length; i++) {
+      var stateRes = results[i];
+      if (stateRes[2] > stateRes[1]) {
+        romneySeries.points.push({
+          map: 'US.name:' + stateRes[0],
+          attributes: {
+            obama: stateRes[1],
+            romney: stateRes[2]
+          }
         });
-        break;
-      case 'apportionmentByYear':
-        for (let i = dataChoice.selectedYear.min; i <= dataChoice.selectedYear.max; i += 10) {
-          marks.push({
-            value: i,
-            label: i,
-          });
-        }
-        setSliderProps({
-          ...sliderProps,
-          marks: marks,
-          currentValue: dataChoice.selectedYear.min,
-          defaultValue: dataChoice.selectedYear.min,
-          min: dataChoice.selectedYear.min,
-          max: dataChoice.selectedYear.max,
-          step: 10,
+      } else {
+        obamaSeries.points.push({
+          map: 'US.name:' + stateRes[0],
+          attributes: {
+            obama: stateRes[1],
+            romney: stateRes[2]
+          }
         });
-        break;
-      case 'apportionmentByPopulation':
-        for (let i = dataChoice.selectedPopulation.min; i <= dataChoice.selectedPopulation.max; i += Math.floor(dataChoice.selectedPopulation.max / 10)) {
-          marks.push({
-            value: i,
-            label: i,
-          });
-        }
-        setSliderProps({
-          ...sliderProps,
-          marks: marks,
-          currentValue: dataChoice.selectedPopulation.min,
-          defaultValue: dataChoice.selectedPopulation.min,
-          min: dataChoice.selectedPopulation.min,
-          max: dataChoice.selectedPopulation.max,
-          step: Math.floor(dataChoice.selectedPopulation.max / 10),
-        });
-        break;
-      case 'apportionmentByRepresentative':
-        for (let i = dataChoice.selectedRepresentatives.min; i <= dataChoice.selectedRepresentatives.max; i += Math.floor(dataChoice.selectedRepresentatives.max / 10)) {
-          marks.push({
-            value: i,
-            label: i,
-          });
-        }
-        setSliderProps({
-          ...sliderProps,
-          marks: marks,
-          currentValue: dataChoice.selectedRepresentatives.min,
-          defaultValue: dataChoice.selectedRepresentatives.min,
-          min: dataChoice.selectedRepresentatives.min,
-          max: dataChoice.selectedRepresentatives.max,
-          step: Math.floor(dataChoice.selectedRepresentatives.max / 10),
-        });
-        break;
-      default:
-          break;
-    }
+      }
   }
 
-  const setAdditionalFieldDisplay = (currentChoice) => {
-    switch (currentChoice) {
-      case 'totalApportionment':
-        setDataChoice({
-          ...dataChoice,
-          selectedState: {value: dataChoice.selectedState.value, isHidden: true},
-          selectedYear: {value: dataChoice.selectedYear.value, isHidden: true, min: 1930, max: 2020},
-          selectedPopulation: {value: dataChoice.selectedPopulation.value, isHidden: true, min: 0, max: 39576757},
-          selectedRepresentatives: {value: dataChoice.selectedRepresentatives.value, isHidden: true, min: 0, max: 53},
-        })
-        break;
-      case 'apportionmentByState':
-        setDataChoice({
-          ...dataChoice,
-          selectedState: {value: dataChoice.selectedState.value, isHidden: false},
-          selectedYear: {value: dataChoice.selectedYear.value, isHidden: true, min: 1930, max: 2020},
-          selectedPopulation: {value: dataChoice.selectedPopulation.value, isHidden: true, min: 0, max: 39576757},
-          selectedRepresentatives: {value: dataChoice.selectedRepresentatives.value, isHidden: true, min: 0, max: 53},
-        })
-        break;
-      case 'apportionmentByYear':
-        setDataChoice({
-          ...dataChoice,
-          selectedState: {value: dataChoice.selectedState.value, isHidden: true},
-          selectedYear: {value: dataChoice.selectedYear.value, isHidden: false, min: 1930, max: 2020},
-          selectedPopulation: {value: dataChoice.selectedPopulation.value, isHidden: true, min: 0, max: 39576757},
-          selectedRepresentatives: {value: dataChoice.selectedRepresentatives.value, isHidden: true, min: 0, max: 53},
-        })
-        break;
-      case 'apportionmentByPopulation':
-        setDataChoice({
-          ...dataChoice,
-          selectedState: {value: dataChoice.selectedState.value, isHidden: true},
-          selectedYear: {value: dataChoice.selectedYear.value, isHidden: true, min: 1930, max: 2020},
-          selectedPopulation: {value: dataChoice.selectedPopulation.value, isHidden: false, min: 0, max: 39576757},
-          selectedRepresentatives: {value: dataChoice.selectedRepresentatives.value, isHidden: true, min: 0, max: 53},
-        })
-        break;
-      case 'apportionmentByRepresentative':
-        setDataChoice({
-          ...dataChoice,
-          selectedState: {value: dataChoice.selectedState.value, isHidden: true},
-          selectedYear: {value: dataChoice.selectedYear.value, isHidden: true, min: 1930, max: 2020},
-          selectedPopulation: {value: dataChoice.selectedPopulation.value, isHidden: true, min: 0, max: 39576757},
-          selectedRepresentatives: {value: dataChoice.selectedRepresentatives.value, isHidden: false, min: 0, max: 53},
-        })
-        break;
-      default:
-        break;
-    }
-  }
+  const chartContainer = document.getElementById('chartDiv');
+  console.log(chartContainer);
 
   React.useEffect(() => {
     return () => {
-      if (apportionment.length === 0){
-        context.actions.totalApportionment().then(res => {
-          setApportionment(res);
-        })
+      if (chartContainer !== null) {
+        if (chartContainer.children.length === 0) {
+          var chart = JSC.chart('chartDiv', chartConfig);
+          // var chart = JSC.chart('chartDiv', chartConfig);
+        }
       }
     }
-  }, [apportionment.length, context.actions]);
+  }, [chartContainer, chartConfig]);
 
-  const handleChange = (event) => {
-    setAdditionalFieldDisplay(event.target.value);
-    handleSetSliderMarks(event.target.value);
-    setDataChoice((prev) =>{
-      return {
-        ...prev,
-        choice: event.target.value,
-      }
-    })
+  const styles = {
+    maxWidth: '740px',
+    margin: '0 auto',
+    height: '510px',
   }
 
-  const dataChoices = [
-    {
-      label: 'Total Apportionment',
-      value: 'totalApportionment',
-    },
-    {
-      label: 'Apportionment by State',
-      value: 'apportionmentByState',
-    },
-    {
-      label: 'Apportionment by Year',
-      value: 'apportionmentByYear',
-    },
-    {
-      label: 'Apportionment by Population',
-      value: 'apportionmentByPopulation',
-    },
-    {
-      label: 'Apportionment by Representative',
-      value: 'apportionmentByRepresentative',
-    },
-  ];
+
+  return (
+    <div id="chartDiv" style={styles}>
+    </div>
+  )
+}
+// <JSCharting style={styles} options={chartConfig} />
 
 
+export default function Apportionment(props) {
+  const { context } = props;
+  const [apportionment, setApportionment] = React.useState([]);
+
+  React.useEffect(() => {
+    return () => {
+      if (apportionment.length === 0) {
+        context.actions.apportionmentYear('2020').then(res => {
+          setApportionment(res);
+        });
+      }
+    }
+  }, [apportionment.length, context.actions])
 
   return (
     <Box sx={{
@@ -228,103 +179,13 @@ export default function Apportionment(props) {
       <Typography variant="h4">Apportionment</Typography>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Box
-            sx={{
-              width: '80%',
-              margin: 'auto',
-            }}
-          >
-            <TextField
-              id="select-data-choice"
-              select
-              fullWidth
-              label="Apportionment Data for Map"
-              value={dataChoice.choice}
-              onChange={handleChange}
-              helperText={`Select the data you would like to see`}
-              sx={{
-                my: 4,
-                py: 2
-              }}
-            >
-              {dataChoices.map(option => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </TextField>
-          </Box>
-        </Grid>
-        <Grid item xs={12}>
-          <Box
-            sx={{
-              width: '80%',
-              margin: 'auto',
-          }}
-          >
-            <TextField
-              id="selectedState"
-              label="Enter a State"
-              fullWidth
-              name="selectedState"
-              sx={{
-                display: dataChoice.selectedState.isHidden ? 'none' : 'inherit',
-              }}
-              onChange={(e) => {
-                setDataChoice({
-                  ...dataChoice,
-                  selectedState: {
-                    value: e.target.value,
-                    isHidden: false,
-                  },
-                });
-              }}
-              value={dataChoice.selectedState.value}
-              helperText={`Enter a state to see its apportionment`}
-            />
-          </Box>
-        </Grid>
-        <Grid item xs={12}>
-          <Slider
-            key={sliderProps.step}
-            marks={sliderProps.marks}
-            step={sliderProps.step}
-            defaultValue={sliderProps.defaultValue}
-            min={sliderProps.min}
-            max={sliderProps.max}
-            onChange={(e, value) => {
-              setSliderProps({
-                ...sliderProps,
-                currentValue: value,
-              });
-            }}
-            sx={{
-              // display: (additionalData.selectedYear.isHidden || additionalData.selectedPopulation.isHidden || additionalData.selectedRepresentatives.isHidden) ? 'none' : 'inherit',
-              display: (dataChoice.choice === 'apportionmentByYear' || dataChoice.choice === 'apportionmentByPopulation' || dataChoice.choice === 'apportionmentByRepresentative') ? 'inherit' : 'none',
-            }}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <FormControlLabel
-            sx={{
-              display: (dataChoice.choice === 'apportionmentByYear' || dataChoice.choice === 'apportionmentByPopulation' || dataChoice.choice === 'apportionmentByRepresentative') ? 'inherit' : 'none',
-            }}
-            control={
-              <Switch
-              />
-            }
-            label="Greater Than Slider Number"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Button
-            variant="contained"
-            color="primary"
-          >
-            Create Map
-          </Button>
+         <Map currentData={apportionment} />
         </Grid>
       </Grid>
     </Box>
   )
 }
+// {/*{apportionment.length > 0 && <Map currentData={apportionment} />}*/}
+//           <svg id="canvas" width={window.innerWidth / 2} height={window.innerHeight /2}>
+//
+//           </svg>
