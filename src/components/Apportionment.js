@@ -10,7 +10,7 @@ const Map = ({currentData}) => {
   const chartConfig = {
     debug: true,
     title_label_text:
-      '2012 Presidential Election Results',
+      'Representative Apportionment of the Population of the United States',
     type: 'map',
     axisToZoom: '',
     toolbar_visible: false,
@@ -27,108 +27,119 @@ const Map = ({currentData}) => {
         style_color: '#3a3a3a'
       },
       tooltip:
-        '%name<br/><b>Obama:</b> %obama%<br/><b>Romney:</b> %romney%<br/><b>Winner:</b> %seriesName'
+        '%name<br/><b>Per Rep:</b> %averagePerRep<br/><b>Population:</b> %population<br/><b>Reps:</b> %reps<br/><b>Year:</b> %year<br/>'
     },
     series: [
       {
-        name: 'Romney',
-        color: '#bb4e55',
-        points: []
-      },
-      {
-        name: 'Obama',
+        name: '1-10 reps',
         color: '#40698b',
         points: []
       },
       {
-        name: 'Representatives',
-        color: '#40698b',
+        name: '11-20 reps',
+        color: '#F2D729',
+        points: []
+      },
+      {
+        name: '21-30 reps',
+        color: '#F2119A',
+        points: []
+      },
+      {
+        name: '31-40 reps',
+        color: '#A61C70',
+        points: []
+      },
+      {
+        name: '41-50 reps',
+        color: '#9411F2',
+        points: []
+      },
+      {
+        name: '51+ reps',
+        color: '#62F59F',
         points: []
       }
     ]
   };
-  console.log(currentData);
-//State, Obama, Romney %
-  var results = [
-    ['Alabama', 38.36, 60.55],
-    ['Alaska', 40.81, 54.8],
-    ['Arizona', 44.45, 53.48],
-    ['Arkansas', 36.88, 60.57],
-    ['California', 60.16, 37.07],
-    ['Colorado', 51.45, 46.09],
-    ['Connecticut', 58.06, 40.72],
-    ['Delaware', 58.61, 39.98],
-    ['D. C.', 90.91, 7.28],
-    ['Florida', 49.9, 49.03],
-    ['Georgia', 45.39, 53.19],
-    ['Hawaii', 70.55, 27.84],
-    ['Idaho', 32.4, 64.09],
-    ['Illinois', 57.5, 40.66],
-    ['Indiana', 43.84, 54.04],
-    ['Iowa', 51.99, 46.18],
-    ['Kansas', 38.0, 59.59],
-    ['Kentucky', 37.78, 60.47],
-    ['Louisiana', 40.58, 57.78],
-    ['Maine', 56.27, 40.98],
-    ['Maryland', 61.97, 35.9],
-    ['Massachusetts', 60.67, 37.52],
-    ['Michigan', 54.04, 44.58],
-    ['Minnesota', 52.65, 44.96],
-    ['Mississippi', 43.79, 55.29],
-    ['Missouri', 44.28, 53.64],
-    ['Montana', 41.66, 55.3],
-    ['Nebraska', 38.03, 59.8],
-    ['Nevada', 52.36, 45.68],
-    ['New Hampshire', 51.98, 46.4],
-    ['New Jersey', 58.25, 40.5],
-    ['New Mexico', 52.99, 42.84],
-    ['New York', 63.35, 35.17],
-    ['North Carolina', 48.35, 50.39],
-    ['North Dakota', 38.69, 58.32],
-    ['Ohio', 50.58, 47.6],
-    ['Oklahoma', 33.23, 66.77],
-    ['Oregon', 54.24, 42.15],
-    ['Pennsylvania', 51.95, 46.57],
-    ['Rhode Island', 62.7, 35.24],
-    ['South Carolina', 44.09, 54.56],
-    ['South Dakota', 39.87, 57.89],
-    ['Tennessee', 39.04, 59.42],
-    ['Texas', 41.35, 57.13],
-    ['Utah', 24.67, 72.55],
-    ['Vermont', 66.57, 30.97],
-    ['Virginia', 51.16, 47.28],
-    ['Washington', 55.8, 41.03],
-    ['West Virginia', 35.45, 62.14],
-    ['Wisconsin', 52.83, 45.89],
-    ['Wyoming', 27.82, 68.64]
-  ];
-  var romneySeries = chartConfig.series[0];
-  var obamaSeries = chartConfig.series[1];
+  const oneToTen = chartConfig.series[0];
+  const elevenToTwenty = chartConfig.series[1];
+  const twentyOneToThirty = chartConfig.series[2];
+  const thirtyOneToForty = chartConfig.series[3];
+  const fortyOneToFifty = chartConfig.series[4];
+  const fiftyOneAndMore = chartConfig.series[5];
 
-  for (
-    var i = 0; i < results.length; i++) {
-      var stateRes = results[i];
-      if (stateRes[2] > stateRes[1]) {
-        romneySeries.points.push({
-          map: 'US.name:' + stateRes[0],
-          attributes: {
-            obama: stateRes[1],
-            romney: stateRes[2]
-          }
-        });
-      } else {
-        obamaSeries.points.push({
-          map: 'US.name:' + stateRes[0],
-          attributes: {
-            obama: stateRes[1],
-            romney: stateRes[2]
-          }
-        });
-      }
-  }
-
+  currentData.forEach((state, index) => {
+    let currentReps = state.reps;
+    let stateName = state.state.replace('-', ' ');
+    let words = stateName.split(' ');
+    words.forEach((word, index) => {
+      words[index] = word.charAt(0).toUpperCase() + word.substring(1);
+    })
+    stateName = words.join(' ');
+    if (currentReps <= 10) {
+      oneToTen.points.push({
+        map: 'US.name:' + stateName,
+        attributes: {
+          averagePerRep: state.avg_per_rep,
+          population: state.pop,
+          reps: state.reps,
+          year: state.year,
+        }
+      });
+    } else if (currentReps > 10 && currentReps <= 20) {
+      elevenToTwenty.points.push({
+        map: 'US.name:' + stateName,
+        attributes: {
+          averagePerRep: state.avg_per_rep,
+          population: state.pop,
+          reps: state.reps,
+          year: state.year,
+        }
+      });
+    } else if (currentReps > 20 && currentReps <= 30) {
+      twentyOneToThirty.points.push({
+        map: 'US.name:' + stateName,
+        attributes: {
+          averagePerRep: state.avg_per_rep,
+          population: state.pop,
+          reps: state.reps,
+          year: state.year,
+        }
+      });
+    } else if (currentReps > 30 && currentReps <= 40) {
+      thirtyOneToForty.points.push({
+        map: 'US.name:' + stateName,
+        attributes: {
+          averagePerRep: state.avg_per_rep,
+          population: state.pop,
+          reps: state.reps,
+          year: state.year,
+        }
+      });
+    } else if (currentReps > 40 && currentReps <= 50) {
+      fortyOneToFifty.points.push({
+        map: 'US.name:' + stateName,
+        attributes: {
+          averagePerRep: state.avg_per_rep,
+          population: state.pop,
+          reps: state.reps,
+          year: state.year,
+        }
+      });
+    } else {
+      fiftyOneAndMore.points.push({
+        map: 'US.name:' + stateName,
+        attributes: {
+          averagePerRep: state.avg_per_rep,
+          population: state.pop,
+          reps: state.reps,
+          year: state.year,
+        }
+      });
+    }
+  })
   const chartContainer = document.getElementById('chartDiv');
-  console.log(chartContainer);
 
   React.useEffect(() => {
     return () => {
@@ -153,7 +164,6 @@ const Map = ({currentData}) => {
     </div>
   )
 }
-// <JSCharting style={styles} options={chartConfig} />
 
 
 export default function Apportionment(props) {
@@ -185,7 +195,4 @@ export default function Apportionment(props) {
     </Box>
   )
 }
-// {/*{apportionment.length > 0 && <Map currentData={apportionment} />}*/}
-//           <svg id="canvas" width={window.innerWidth / 2} height={window.innerHeight /2}>
-//
-//           </svg>
+
