@@ -1,9 +1,10 @@
 import React from "react";
+import {Box} from "@mui/material";
 
 export default function Legend() {
   return (
-    <div>
-      <h1>Legend</h1>
-    </div>
+    <Box className="legend">
+      <Box style={{`--color: `}}></Box>
+    </Box>
   );
 }

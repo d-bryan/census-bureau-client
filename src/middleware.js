@@ -20,6 +20,26 @@ export function mapStateName(currentData) {
     return currentData;
 }
 
+const mapEnum = {
+    apportionment: 'apportionment',
+    itemizedTaxes: 'itemizedTaxes',
+    unemployment: 'unemployment',
+}
+
+export const apportionmentMapPolygonColorToDensity = (reps => {
+    return reps > 50
+      ? '#62F59F'
+      : reps > 30
+        ? '#9411F2'
+        : reps > 20
+          ? '#A61C70'
+          : reps > 10
+            ? '#F2119A'
+            : reps > 5
+              ? '#F2D729'
+              : '#40698b';
+})
+
 export function binarySearch(arr, target, start, end) {
     // base
     if (start > end) return false;
