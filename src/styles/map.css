@@ -1,7 +1,7 @@
 .census-info {
     display: flex;
     flex-direction: column;
-    align-items: end;
+    align-items: flex-end;
     top: 55px;
     right: 150px;
     padding: 10px 10px;
@@ -11,8 +11,8 @@
     background: rgba(0,0,0,0.8);
     margin-top: 150px;
     list-style: none;
-    width: 20%;
-    height: 20%;
+    /*width: 20%;*/
+    /*height: 20%;*/
     font-size:12px;
     position: absolute;
     z-index: 999;
@@ -22,8 +22,8 @@
     z-index: 999;
     top: 55px;
     right: 150px;
-    height: 20%;
-    width: 20%;
+    /*height: 20%;*/
+    /*width: 20%;*/
     padding: 10px 10px;
     border-radius: 5px;
     color: white;
