@@ -6,8 +6,11 @@ export default function Home() {
     <Box sx={{
       padding: 2,
     }}>
-      <Typography variant="h4">
-        Select a page to get started
+      <Typography variant="h6">
+        Data Science project that implements a REST API and data from the Bureau of Labor Statistics.
+      </Typography>
+      <Typography variant="p">Select a menu Item
+        to see a Choropleth map regarding the data.
       </Typography>
     </Box>
   )

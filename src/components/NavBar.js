@@ -35,12 +35,12 @@ export default function NavBar() {
             >
               <Typography variant="h6" sx={{paddingRight: 2}}>Itemized Taxes</Typography>
             </Link>
-            <Link
-              to="/unemployment"
-              style={{textDecoration: 'none', color: 'inherit'}}
-            >
-              <Typography variant="h6" sx={{paddingRight: 2}}>Unemployment</Typography>
-            </Link>
+            {/*<Link*/}
+            {/*  to="/unemployment"*/}
+            {/*  style={{textDecoration: 'none', color: 'inherit'}}*/}
+            {/*>*/}
+            {/*  <Typography variant="h6" sx={{paddingRight: 2}}>Unemployment</Typography>*/}
+            {/*</Link>*/}
           </Box>
         </Toolbar>
       </Container>
