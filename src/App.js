@@ -8,13 +8,11 @@ import Home from "./components/Home";
 import NavBar from "./components/NavBar";
 import Apportionment from "./components/Apportionment";
 import ItemizedTaxes from "./components/ItemizedTaxes";
-import Unemployment from "./components/Unemployment";
 
 function App() {
   const HomeWithContext = withContext(Home);
   const ApportionmentWithContext = withContext(Apportionment);
   const ItemizedTaxesWithContext = withContext(ItemizedTaxes);
-  const UnemploymentWithContext = withContext(Unemployment);
 
   let element = useRoutes([
     {
@@ -28,10 +26,6 @@ function App() {
     {
       path: '/itemized-taxes',
       element: <ItemizedTaxesWithContext/>,
-    },
-    {
-      path: '/unemployment',
-      element: <UnemploymentWithContext/>,
     },
     {
       path: '*',
