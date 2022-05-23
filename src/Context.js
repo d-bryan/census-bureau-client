@@ -147,8 +147,8 @@ export class Provider extends Component {
   }
 
 // UNEMPLOYMENT COUNTY
-  unemploymentCountyRange = async (range) => {
-    const result = await this.data.getUnemploymentCountyRange(range)
+  unemploymentCountyRange = async (from, to) => {
+    const result = await this.data.getUnemploymentCountyRange(from, to)
     return result;
   }
 

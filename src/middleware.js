@@ -41,6 +41,7 @@ export function mapStateName(currentData) {
 // })
 
 export function binarySearch(arr, target, start, end) {
+    // console.log(arr, target, start, end);
     // base
     if (start > end) return false;
 

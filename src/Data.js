@@ -281,10 +281,10 @@ export default class Data {
    * Retrieves Total Unemployment data from api
    * @returns {JSON} json value of Unemployment data
    */
-  async getUnemploymentCountyRange(range) {
+  async getUnemploymentCountyRange(from, to) {
     const current = config.routes.unemploymentCounty.full;
     let localUrl = this._baseUrl;
-    localUrl += `${current.route}?${current.paramType}=${range[0]}&${current.paramType}=${range[1]}`;
+    localUrl += `${current.route}?${current.paramType}=${from}&${current.paramType}=${to}`;
     const response = await fetch(localUrl);
     // const response = await this.api(current.route, current.paramType, range);
     if (response.status === 200) {

@@ -160,35 +160,20 @@ export default function ItemizedTaxesMap({currentData}) {
             <li><strong>State: {onSelect.st}</strong></li>
             <li>Year: <strong>{onSelect.yr}</strong></li>
             <li>Total Taxes: <strong>{onSelect.total_taxes}</strong></li>
-            {/*<li>Alcoholic Beverages License: {onSelect.alcoholic_beverages_license}</li>*/}
             <li>Alcoholic Beverages Sales Tax: <strong>{onSelect.alcoholic_beverages_sales_tax}</strong></li>
-            {/*<li>Amusements License: {onSelect.amusements_license}</li>*/}
             <li>Amusements Sales Tax: <strong>{onSelect.amusements_sales_tax}</strong></li>
-            {/*<li>Corporations in General License: {onSelect.corporations_in_general_license}</li>*/}
             <li>Corporations Net Income Taxes: <strong>{onSelect.corporations_net_income_taxes}</strong></li>
             <li>Death and Gift Taxes: <strong>{onSelect.death_and_gift_taxes}</strong></li>
             <li>Documentary and Stock Transfer Taxes: <strong>{onSelect.documentarty_and_stock_transfer_taxes}</strong></li>
             <li>General Sales and Gross Receipts Taxes: <strong>{onSelect.general_sales_and_gross_receipts_taxes}</strong></li>
-            {/*<li>Hunting and Fishing License: {onSelect.hunting_and_fishing_license}</li>*/}
             <li>Income Taxes: <strong>{onSelect.income_taxes}</strong></li>
             <li>Individual Income Taxes: <strong>{onSelect.individual_income_taxes}</strong></li>
             <li>Insurance Premiums Sales Tax: <strong>{onSelect.insurance_premiums_sales_tax}</strong></li>
-            {/*<li>License Taxes: {onSelect.license_taxes}</li>*/}
             <li>Motor Fuel Sales Tax: <strong>{onSelect.motor_fuels_sales_tax}</strong></li>
             <li>Motor Vehicle License: <strong>{onSelect.motor_vehicle_license}</strong></li>
-            {/*<li>Motor Vehicle Operators License: {onSelect.motor_vehicle_operators_license}</li>*/}
-            {/*<li>Occupation and Business License NEC: {onSelect.occupation_and_business_license_nec}</li>*/}
-            {/*<li>Other License Taxes: {onSelect.other_license_taxes}</li>*/}
-            {/*<li>Other Selective Sales and Gross Receipts Taxes: {onSelect.other_selective_sales_and_gross_receipts_taxes}</li>*/}
-            {/*<li>Other Taxes: {onSelect.other_taxes}</li>*/}
-            {/*<li>Pari Mutuels Sales Tax: {onSelect.pari_mutuels_sales_tax}</li>*/}
             <li>Property Taxes: <strong>{onSelect.property_taxes}</strong></li>
-            {/*<li>Public Utilities License: {onSelect.public_utilities_license}</li>*/}
             <li>Public Utilities Sales Tax: <strong>{onSelect.public_utilities_sales_tax}</strong></li>
-            {/*<li>Sales and Gross Receipts Taxes: {onSelect.sales_and_gross_receipts_taxes}</li>*/}
-            {/*<li>Selective Sales and Gross Receipts Taxes: {onSelect.selective_sales_and_gross_receipts_taxes}</li>*/}
             <li>Severance Taxes: <strong>{onSelect.severance_taxes}</strong></li>
-            {/*<li>Taxes NEC: {onSelect.taxes_nec}</li>*/}
             <li>Tobacco Products Sales Tax: <strong>{onSelect.tobacco_products_sales_tax}</strong></li>
           </ul>
         )}
