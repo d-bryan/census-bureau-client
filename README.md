@@ -1,5 +1,9 @@
 # Census Bureau Client Project
 
+## Live Demo
+
+Visit a live demo of the application on Netlify [here](https://census-bureau-client.netlify.app/)
+
 ## Description
 
 Client to interact with the Census Bureau API I built, [GitHub Repository](https://github.com/d-bryan/census-data-api).
@@ -33,8 +37,3 @@ If running locally you will also need the API repository installed separately.
 `git clone https://github.com/d-bryan/census-data-api.git`
 
 `pip install -r requirements.txt`
-
-
-## Live Demo
-
-Visit a live demo of the application on Netlify [here](https://census-data-client.netlify.app/)
